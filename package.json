@@ -1,0 +1,7 @@
+{
+  "name": "apmd-web",
+  "private": true,
+  "dependencies": {
+    "@keyframes/core": "^2.0.10"
+  }
+}
