@@ -192,7 +192,7 @@ body {
 }
 
 .donut-segment-3 {
-    stroke: #d9e021;
+    stroke: blue;
     animation: donut2 3s;
 }
 
@@ -224,7 +224,7 @@ body {
         stroke-dasharray: 0, 100;
     }
     100% {
-        stroke-dasharray: 50, 50;
+        stroke-dasharray: 70, 30;
     }
 }
 
@@ -233,7 +233,7 @@ body {
         stroke-dasharray: 0, 100;
     }
     100% {
-        stroke-dasharray: 30, 70;
+        stroke-dasharray: 100, 0;
     }
 }
 
