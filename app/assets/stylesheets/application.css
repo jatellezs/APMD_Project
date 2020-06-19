@@ -35,10 +35,15 @@ body {
     display: flex;
     justify-content: center;
     height: 80vh;
-    padding-top: 5vw;
+    padding-top: 7vw;
 }
 
 #chart_div > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#heatmap_div > canvas {
     display: table-cell;
     vertical-align: middle;
 }
@@ -285,3 +290,69 @@ body {
     fill: white;
     animation: donutfadelong 1s;
 }
+
+
+.grid {
+    display: inline-grid;
+    position: relative;
+    counter-reset: columnLines 1 rowLines 1;
+    grid-template-rows: repeat(9, 55.5px);
+    border: 1px solid black;
+    margin: 25px;
+  }
+  
+  .row {
+    display: grid;
+    position: relative;
+    color: white;
+    grid-template-columns: repeat(9, 55.5px);
+    counter-increment: rowLines;
+  }
+  
+  .row:not(:last-child) {
+    border-bottom: 1px solid black;
+  }
+  
+  .row > div:not(:last-child) {
+    border-right: 1px solid black;
+  }
+  
+  /*Column lines*/
+  .row:first-child:before {
+    content: "1";
+    transform: translate(-50%, -100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .row:first-child > div {
+    counter-increment: columnLines;
+    position: relative;
+  }
+  
+  .row:first-child > div:after{
+    transform: translate(50%, -100%);
+    content: counter(columnLines);
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  /*Row lines*/
+  .row:after {
+    transform: translate(100%, 50%);
+    content: counter(rowLines);
+    position: absolute;
+    bottom: 0;
+    right: -5px;
+  }
+  
+  .grid:before {
+    transform: translate(100%, -50%);
+    position: absolute;
+    right: -5px;
+    content: "1";
+    color: white;
+    top: 0;
+  }

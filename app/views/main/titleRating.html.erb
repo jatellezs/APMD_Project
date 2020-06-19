@@ -1,0 +1,31 @@
+<div class="content">
+    <h1 style="width: 100%; margin: 0; color: white; text-align: center; padding-top: 4vw; position: absolute;">Popularity By Type and Adult Filter</h1>
+
+    <div class="graph-row" style="padding-top: 8vw;">
+        <div id="chart_div" style="width: 60%; display: table; height: 80%; align-self: center;"></div>
+    </div>
+</div>
+
+<%= content_tag :div, '', id: 'mycontainer4', data: { source: @data_list_4 } %>
+
+<script type="text/javascript">
+    var data_table = $('#mycontainer4').data('source');
+
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(data_table);
+
+        var options = {
+            chart: {
+                title: 'Popularity by type and adult filter',
+                subtitle: 'Measured by Total N° of Votes',
+            }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }   
+</script>

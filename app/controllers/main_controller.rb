@@ -110,4 +110,85 @@ class MainController < ApplicationController
 
         @data_list_3
     end
+
+    def heatmap
+        client = Mongo::Client.new('mongodb://127.0.0.1:27017/PROJECT')
+        db = client.database
+
+        collection = client[:imdb]
+        data = collection.aggregate([
+            {
+                '$match' => { 
+                    '$and' => [
+                        { 'runtimeMinutes' => { '$lt' => 500 } },
+                        { 'numVotes' => { '$ne' => 0 } }
+                    ]
+                }
+            },
+            {
+                '$group' => {
+                    '_id' => {
+                        'minutes' => '$runtimeMinutes',
+                        'rated' => '$rating'
+                    },
+                    'total' => { '$sum' => '$numVotes' }
+                }
+            }
+        ])
+
+        data_list_5 = {values: [], maxValue: 0, minValue: 100000000}
+
+        data.each do |doc|
+            data_list_5[:values] << {x: doc[:_id][:minutes], y: ((doc[:_id][:rated] - 1 ) * 56), value: doc[:total]}
+            if data_list_5[:maxValue] < doc[:total]
+                data_list_5[:maxValue] = doc[:total]
+            end
+            if data_list_5[:minValue] > doc[:total]
+                data_list_5[:minValue] = doc[:total]
+            end
+        end
+
+        @data_list_5 = data_list_5
+    end
+
+    def titleRating
+        client = Mongo::Client.new('mongodb://127.0.0.1:27017/PROJECT')
+        db = client.database
+
+        collection = client[:imdb]
+        data = collection.aggregate([
+            {
+                '$match' => { 'numVotes' => { '$ne' => 0 } }
+            },
+            {
+                '$group' => {
+                    '_id' => {
+                        'title' => '$titleType',
+                        'isAdult' => '$isAdult'
+                    },
+                    'total' => { '$sum' => '$numVotes' }
+                }
+            },
+            {
+                '$sort' => { '_id' => 1 }
+            }
+        ])
+
+        data_list_4 = [['Title Type', 'Not Adult Popularity', 'Adult Popularity']]
+        type = ["Short", "Movie", "TV Movie", "TV Short", "TV Special", "VideoGame"]
+        col = 0
+        ind = 1
+        data.each do |doc|
+            if col == 0
+                data_list_4 << [type[doc[:_id][:title]], doc[:total], 0]
+                col = 1
+            else
+                data_list_4[ind][2] = doc[:total]
+                ind += 1
+                col = 0
+            end
+        end
+
+        @data_list_4 = data_list_4
+    end
 end

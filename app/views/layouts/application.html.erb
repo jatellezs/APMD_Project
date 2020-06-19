@@ -7,12 +7,30 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'heatmap'%>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src='http://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
   </head>
 
   <body>
+    <nav role="navigation">
+      <div id="menuToggle">
+        <input type="checkbox" />
+        
+        <span></span>
+        <span></span>
+        <span></span>
+        
+        <ul id="menu">
+          <a href="/"><li>Highest Ratings by Title Type</li></a>
+          <a href="/rating_runtime"><li>Highest Ratings by Duration Interval</li></a>
+          <a href="/workers"><li>Most Popular Workers</li></a>
+          <a href="/heatmap"><li>Heatmap of Popularity by Runtime-Rating</li></a>
+          <a href="/titleRating"><li>Popularity of Title Types by Adult Filter</li></a>
+        </ul>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>

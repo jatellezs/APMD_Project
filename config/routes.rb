@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   root to: 'main#index'
   get '/rating_runtime', to: 'main#runtime'
   get '/workers', to: 'main#actors'
+  get '/heatmap', to: 'main#heatmap'
+  get '/titleRating', to: 'main#titleRating'
 end
